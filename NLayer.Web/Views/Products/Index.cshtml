@@ -1,0 +1,113 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@model List<ProductWithCategoryDto>
+
+    @section PageCss{
+        <link href="~/assets/libs/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/libs/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
+    }
+
+                              <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                 <br />
+                 <br />
+                    
+                        <!-- end page title --> 
+                         <a class="btn btn-primary btn-rounded width-md waves-effect waves-light mb-4" asp-controller="Products" asp-action="Save">          
+                               <i class=" fas fa-user-plus mr-1"></i> New Product  
+                        </a> 
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-box">
+                                   
+                                
+
+                                    <table class="table table-hover m-0 tickets-list table-actions-bar dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;"  id="datatable">
+                                        <thead>
+                                        <tr>
+                                            <td>Id</td>
+                                            <td>İsim</td>
+                                            <td>Alış Fiyatı</td>
+                                            <td>Satış Fiyatı</td>
+                                            <td>Stok</td>
+                                            <td>Kategori</td>
+                                            <td class="hidden-sm">İşlemler</td>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                     @foreach (var item in Model)
+                                     {
+
+                                        <tr>
+                                          
+                                            <td>
+                                                <span class="ml-1">
+                                                    <b>  @item.Id  </b>
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                @item.Name
+                                            </td>       
+
+                                            <td>
+                                                <span class="badge badge-secondary">
+                                                    @item.BuyPrice
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <span class="badge badge-secondary">
+                                                    @item.SellPrice
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <span class="badge badge-success">
+                                                    @item.Stock
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                @item.Category.Name
+                                            </td>
+
+
+                                            <td>
+                                             		    <a asp-controller="Products" asp-action="Update" asp-route-id="@item.Id"><i class="mdi mdi-square-edit-outline mr-1 text-muted font-18 vertical-middle"></i>  </a>
+                                                        
+                                                        <a asp-controller="Products" asp-action="Remove" asp-route-id="@item.Id"><i class="mdi mdi-delete mr-1 text-muted font-18 vertical-middle"></i>  </a>
+                                            </td>
+                                        </tr>
+                                       }
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- end container-fluid -->
+
+
+     @section PageJs{
+
+        <!-- third party js -->
+        <script src="~/assets/libs/datatables/jquery.dataTables.min.js"></script>
+        <script src="~/assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="~/assets/libs/datatables/dataTables.responsive.min.js"></script>       
+
+        <!-- Tickets js -->
+        <script src="~/assets/js/pages/tickets.init.js"></script>
+        
+    }
+
+
+
+

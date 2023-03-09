@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewData["Title"] = "Save";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model CategoryWithProductsDto
+<br />
+
+<h2>Save Category</h2>
+<br />
+<div class="row">
+    <div class=col-md-6>
+
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name)
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+</div>
+            <br />
+
+            <br />
+            <h4>Add Product</h4>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Buy Price</th>
+                        <th>Sell Name</th>
+                        <th>Stock</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="product-table-body">
+                    <tr>
+                        <td>
+                            @Html.TextBox("Products[0].Name", null, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Products[0].BuyPrice", null, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Products[0].SellPrice", null, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Products[0].Stock", null, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" onclick="addProductRow()">Add</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Create</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        }
+    </div>
+</div>
+
+@section PageJs{
+    <script>
+        function addProductRow() {
+            var rowIndex = $('#product-table-body tr').length;
+            var newRow = '<tr>' +
+                '<td><input class="form-control" name="Products[' + rowIndex + '].Name" type="text" /></td>' +
+                '<td><input class="form-control" name="Products[' + rowIndex + '].BuyPrice" type="text" /></td>' +
+                '<td><input class="form-control" name="Products[' + rowIndex + '].SellPrice" type="text" /></td>' +
+                '<td><input class="form-control" name="Products[' + rowIndex + '].Stock" type="text" /></td>' +
+                '<td><button type="button" class="btn btn-danger" onclick="removeProductRow(this)">Remove</button></td>' +
+                '</tr>';
+            $('#product-table-body').append(newRow);
+        }
+
+        function removeProductRow(button) {
+            $(button).closest('tr').remove();
+        }
+    </script>
+}
